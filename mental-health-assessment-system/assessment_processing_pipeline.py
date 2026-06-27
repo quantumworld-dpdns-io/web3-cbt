@@ -237,8 +237,22 @@ class AssessmentProcessor:
                 'irrational_beliefs': en_irrational
             }, f, ensure_ascii=False, indent=2)
         
+        with open(self.i18n_dir / "irrational_beliefs_en.json", 'w', encoding='utf-8') as f:
+            json.dump({
+                'metadata': {'language': 'en'},
+                'cognitive_distortions': en_cognitive,
+                'irrational_beliefs': en_irrational
+            }, f, ensure_ascii=False, indent=2)
+        
         # Save Chinese files
         with open(self.i18n_dir / "cognitive_distortions_zh-tw.json", 'w', encoding='utf-8') as f:
+            json.dump({
+                'metadata': {'language': 'zh-TW'},
+                'cognitive_distortions': zh_tw_cognitive,
+                'irrational_beliefs': zh_tw_irrational
+            }, f, ensure_ascii=False, indent=2)
+        
+        with open(self.i18n_dir / "irrational_beliefs_zh-tw.json", 'w', encoding='utf-8') as f:
             json.dump({
                 'metadata': {'language': 'zh-TW'},
                 'cognitive_distortions': zh_tw_cognitive,
