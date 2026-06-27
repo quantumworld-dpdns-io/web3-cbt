@@ -1,0 +1,65 @@
+{
+  "metadata": {
+    "language": "en"
+  },
+  "cognitive_distortions": [
+    {
+      "id": "taiwan_mohw_cog_001",
+      "label": "All-or-nothing thinking",
+      "description": "Viewing situations in black and white terms",
+      "weight": 1.5,
+      "importance_score": 8,
+      "original_source": "taiwan_mohw"
+    },
+    {
+      "id": "taiwan_mohw_cog_002",
+      "label": "Catastrophizing",
+      "description": "Expecting the worst possible outcome",
+      "weight": 1.8,
+      "importance_score": 9,
+      "original_source": "taiwan_mohw"
+    },
+    {
+      "id": "taiwan_nhri_cog_001",
+      "label": "Experience-based learning",
+      "description": "Leveraging personal experience for learning",
+      "weight": 0.8,
+      "importance_score": 6,
+      "original_source": "taiwan_nhri"
+    },
+    {
+      "id": "uk_nhs_cog_001",
+      "label": "All-or-nothing thinking",
+      "description": "Viewing situations in extremes",
+      "weight": 1.0,
+      "importance_score": 6,
+      "original_source": "uk_nhs"
+    },
+    {
+      "id": "us_nimh_cog_001",
+      "label": "All-or-nothing thinking",
+      "description": "Viewing situations in black and white terms",
+      "weight": 1.0,
+      "importance_score": 6,
+      "original_source": "us_nimh"
+    }
+  ],
+  "irrational_beliefs": [
+    {
+      "id": "taiwan_mohw_irr_001",
+      "label": "I must be perfect",
+      "description": "Rigid requirement for perfection",
+      "weight": 2.0,
+      "relevance_score": 8,
+      "original_source": "taiwan_mohw"
+    },
+    {
+      "id": "taiwan_mohw_irr_002",
+      "label": "People should always treat me well",
+      "description": "Unrealistic expectations about how others should treat us",
+      "weight": 1.6,
+      "relevance_score": 7,
+      "original_source": "taiwan_mohw"
+    }
+  ]
+}
