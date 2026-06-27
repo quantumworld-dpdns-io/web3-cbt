@@ -1,0 +1,131 @@
+{
+  "metadata": {
+    "created_at": "2026-06-27T13:54:57.363904",
+    "version": "1.0.0",
+    "primary_authority": "Taiwan Ministry of Health & Welfare and National Health Research Institutes",
+    "international_supplementary": [
+      "UK NHS",
+      "US NIMH"
+    ]
+  },
+  "cognitive_distortions": [
+    {
+      "id": "taiwan_mohw_cog_001",
+      "label_en": "All-or-nothing thinking",
+      "label_zh-tw": "非黑即白思想",
+      "description_en": "Viewing situations in black and white terms",
+      "description_zh-tw": "将事情视为黑白两极",
+      "weight": 1.5,
+      "importance_score": 8,
+      "original_source": "taiwan_mohw",
+      "taiwan_validation": true,
+      "cultural_notes": [
+        "台湾学生高压力环境"
+      ]
+    },
+    {
+      "id": "taiwan_mohw_cog_002",
+      "label_en": "Catastrophizing",
+      "label_zh-tw": "灾难化思考",
+      "description_en": "Expecting the worst possible outcome",
+      "description_zh-tw": "期待最糟糕的结果",
+      "weight": 1.8,
+      "importance_score": 9,
+      "original_source": "taiwan_mohw",
+      "taiwan_validation": true,
+      "cultural_notes": [
+        "台湾职场文化"
+      ]
+    },
+    {
+      "id": "taiwan_nhri_cog_001",
+      "label_en": "Experience-based learning",
+      "label_zh-tw": "发挥经验学习能力",
+      "description_en": "Leveraging personal experience for learning",
+      "description_zh-tw": "面对困境时寻找资源与帮助",
+      "weight": 0.8,
+      "importance_score": 6,
+      "original_source": "taiwan_nhri",
+      "taiwan_validation": true,
+      "cultural_notes": [
+        "台湾人重视人际关系与和谐"
+      ]
+    },
+    {
+      "id": "uk_nhs_cog_001",
+      "label_en": "All-or-nothing thinking",
+      "label_zh-tw": "非黑即白思想",
+      "description_en": "Viewing situations in extremes",
+      "description_zh-tw": "将事情视为非黑即白",
+      "weight": 1.0,
+      "importance_score": 6,
+      "original_source": "uk_nhs",
+      "taiwan_validation": false,
+      "cultural_notes": [
+        "UK work culture"
+      ]
+    },
+    {
+      "id": "us_nimh_cog_001",
+      "label_en": "All-or-nothing thinking",
+      "label_zh-tw": "非黑即白思想",
+      "description_en": "Viewing situations in black and white terms",
+      "description_zh-tw": "将事情视为黑白两极",
+      "weight": 1.0,
+      "importance_score": 6,
+      "original_source": "us_nimh",
+      "taiwan_validation": false,
+      "cultural_notes": [
+        "US clinical settings"
+      ]
+    }
+  ],
+  "irrational_beliefs": [
+    {
+      "id": "taiwan_mohw_irr_001",
+      "label_en": "I must be perfect",
+      "label_zh-tw": "我必须完美",
+      "description_en": "Rigid requirement for perfection",
+      "description_zh-tw": "完美无缺的要求",
+      "weight": 2.0,
+      "relevance_score": 8,
+      "original_source": "taiwan_mohw",
+      "taiwan_validation": true,
+      "cultural_notes": [
+        "台湾社会强调人际和谐"
+      ]
+    },
+    {
+      "id": "taiwan_mohw_irr_002",
+      "label_en": "People should always treat me well",
+      "label_zh-tw": "人应该总是对我好",
+      "description_en": "Unrealistic expectations about how others should treat us",
+      "description_zh-tw": "关于他人应该如何对待我们的不切实际的期望",
+      "weight": 1.6,
+      "relevance_score": 7,
+      "original_source": "taiwan_mohw",
+      "taiwan_validation": true,
+      "cultural_notes": [
+        "台湾人重视人际关系"
+      ]
+    }
+  ],
+  "source_attributions": {
+    "taiwan_mohw": {
+      "validation_status": "official",
+      "item_count": 2
+    },
+    "taiwan_nhri": {
+      "validation_status": "official",
+      "item_count": 1
+    },
+    "uk_nhs": {
+      "validation_status": "supplementary",
+      "item_count": 1
+    },
+    "us_nimh": {
+      "validation_status": "supplementary",
+      "item_count": 1
+    }
+  }
+}
