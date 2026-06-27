@@ -1,0 +1,26 @@
+{
+  "processing_info": {
+    "processed_at": "2026-06-27T14:02:09.032316",
+    "processor_version": "2.0.0",
+    "processing_method": "parallel",
+    "parallel_workers": 4
+  },
+  "source_summary": {
+    "taiwan_mohw": {
+      "status": "success",
+      "item_count": 2
+    },
+    "taiwan_nhri": {
+      "status": "success",
+      "item_count": 1
+    },
+    "uk_nhs": {
+      "status": "success",
+      "item_count": 1
+    },
+    "us_nimh": {
+      "status": "success",
+      "item_count": 1
+    }
+  }
+}

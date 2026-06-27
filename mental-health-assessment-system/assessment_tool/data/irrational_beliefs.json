@@ -1,0 +1,30 @@
+[
+  {
+    "id": "taiwan_mohw_irr_001",
+    "label_en": "I must be perfect",
+    "label_zh-tw": "我必须完美",
+    "description_en": "Rigid requirement for perfection",
+    "description_zh-tw": "完美无缺的要求",
+    "weight": 2.0,
+    "relevance_score": 8,
+    "original_source": "taiwan_mohw",
+    "taiwan_validation": true,
+    "cultural_notes": [
+      "台湾社会强调人际和谐"
+    ]
+  },
+  {
+    "id": "taiwan_mohw_irr_002",
+    "label_en": "People should always treat me well",
+    "label_zh-tw": "人应该总是对我好",
+    "description_en": "Unrealistic expectations about how others should treat us",
+    "description_zh-tw": "关于他人应该如何对待我们的不切实际的期望",
+    "weight": 1.6,
+    "relevance_score": 7,
+    "original_source": "taiwan_mohw",
+    "taiwan_validation": true,
+    "cultural_notes": [
+      "台湾人重视人际关系"
+    ]
+  }
+]

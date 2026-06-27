@@ -1,0 +1,65 @@
+{
+  "metadata": {
+    "language": "zh-TW"
+  },
+  "cognitive_distortions": [
+    {
+      "id": "taiwan_mohw_cog_001",
+      "label": "非黑即白思想",
+      "description": "将事情视为黑白两极",
+      "weight": 1.5,
+      "importance_score": 8,
+      "original_source": "taiwan_mohw"
+    },
+    {
+      "id": "taiwan_mohw_cog_002",
+      "label": "灾难化思考",
+      "description": "期待最糟糕的结果",
+      "weight": 1.8,
+      "importance_score": 9,
+      "original_source": "taiwan_mohw"
+    },
+    {
+      "id": "taiwan_nhri_cog_001",
+      "label": "发挥经验学习能力",
+      "description": "面对困境时寻找资源与帮助",
+      "weight": 0.8,
+      "importance_score": 6,
+      "original_source": "taiwan_nhri"
+    },
+    {
+      "id": "uk_nhs_cog_001",
+      "label": "非黑即白思想",
+      "description": "将事情视为非黑即白",
+      "weight": 1.0,
+      "importance_score": 6,
+      "original_source": "uk_nhs"
+    },
+    {
+      "id": "us_nimh_cog_001",
+      "label": "非黑即白思想",
+      "description": "将事情视为黑白两极",
+      "weight": 1.0,
+      "importance_score": 6,
+      "original_source": "us_nimh"
+    }
+  ],
+  "irrational_beliefs": [
+    {
+      "id": "taiwan_mohw_irr_001",
+      "label": "我必须完美",
+      "description": "完美无缺的要求",
+      "weight": 2.0,
+      "relevance_score": 8,
+      "original_source": "taiwan_mohw"
+    },
+    {
+      "id": "taiwan_mohw_irr_002",
+      "label": "人应该总是对我好",
+      "description": "关于他人应该如何对待我们的不切实际的期望",
+      "weight": 1.6,
+      "relevance_score": 7,
+      "original_source": "taiwan_mohw"
+    }
+  ]
+}

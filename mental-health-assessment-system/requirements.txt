@@ -1,0 +1,22 @@
+# Mental Health Assessment System - Python Dependencies
+
+# Core dependencies for the assessment processing pipeline
+requests>=2.31.0
+python-dotenv>=1.0.0
+
+# Data processing
+pandas>=2.1.0
+numpy>=1.24.0
+
+# Testing
+pytest>=7.4.0
+pytest-cov>=4.1.0
+
+# Code quality
+black>=23.0.0
+flake8>=6.0.0
+mypy>=1.5.0
+
+# Documentation
+sphinx>=7.0.0
+sphinx-rtd-theme>=1.3.0

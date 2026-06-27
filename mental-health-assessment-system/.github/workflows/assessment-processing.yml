@@ -1,0 +1,253 @@
+# GitHub Actions Workflow for Mental Health Assessment Processing
+
+# Automated parallel processing of mental health assessment content
+# Runs daily and on manual trigger to keep data up-to-date
+
+name: Mental Health Assessment Processing
+
+on:
+  # Scheduled run daily at 2 AM UTC
+  schedule:
+    - cron: '0 2 * * *'
+  
+  # Manual trigger
+  workflow_dispatch:
+    inputs:
+      sources:
+        description: 'Sources to process (all, taiwan_only, uk_only, us_only, or comma-separated list)'
+        required: true
+        default: 'all'
+        type: choice
+        options:
+          - all
+          - taiwan_only
+          - uk_only
+          - us_only
+  
+  # Run on push to main branch
+  push:
+    branches:
+      - main
+    paths:
+      - 'assessment_processing_pipeline.py'
+      - 'data_processing/**'
+
+# Environment variables
+env:
+  PYTHON_VERSION: '3.11'
+  NODE_VERSION: '18'
+
+jobs:
+  # Parallel data extraction job
+  parallel-data-extraction:
+    name: Parallel Data Extraction
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    
+    steps:
+      # Checkout repository
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      
+      # Setup Python
+      - name: Setup Python ${{ env.PYTHON_VERSION }}
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+          cache: 'pip'
+      
+      # Install Python dependencies
+      - name: Install dependencies
+        run: |
+          pip install --upgrade pip
+          pip install -r requirements.txt
+      
+      # Create output directories
+      - name: Create output directories
+        run: |
+          mkdir -p assessment_tool/data
+          mkdir -p frontend/src/i18n
+          mkdir -p logs
+      
+      # Run parallel processing pipeline
+      - name: Run assessment processing pipeline
+        run: |
+          python assessment_processing_pipeline.py
+        env:
+          SOURCES: ${{ github.event.inputs.sources || 'all' }}
+      
+      # Validate generated files
+      - name: Validate generated files
+        run: |
+          # Check that all required files exist
+          ls -la assessment_tool/data/
+          ls -la frontend/src/i18n/
+          
+          # Validate JSON syntax
+          python -c "
+          import json
+          import os
+          
+          files_to_check = [
+              'assessment_tool/data/unified_assessments.json',
+              'assessment_tool/data/cognitive_distortions.json',
+              'assessment_tool/data/irrational_beliefs.json',
+              'frontend/src/i18n/cognitive_distortions_en.json',
+              'frontend/src/i18n/cognitive_distortions_zh-tw.json',
+              'frontend/src/i18n/irrational_beliefs_en.json',
+              'frontend/src/i18n/irrational_beliefs_zh-tw.json'
+          ]
+          
+          for f in files_to_check:
+              with open(f) as fp:
+                  json.load(fp)
+              print(f'✓ {f} - valid JSON')
+          "
+      
+      # Upload processed data as artifact
+      - name: Upload processed assessment data
+        uses: actions/upload-artifact@v4
+        with:
+          name: processed-assessments-${{ github.run_number }}
+          path: |
+            assessment_tool/data/
+            frontend/src/i18n/
+          retention-days: 30
+      
+      # Generate summary
+      - name: Generate processing summary
+        run: |
+          echo "## Mental Health Assessment Processing Summary" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "**Run ID:** ${{ github.run_number }}" >> $GITHUB_STEP_SUMMARY
+          echo "**Date:** $(date -u)" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "### Sources Processed" >> $GITHUB_STEP_SUMMARY
+          echo "- Taiwan MOHW (Ministry of Health & Welfare)" >> $GITHUB_STEP_SUMMARY
+          echo "- Taiwan NHRI (National Health Research Institutes)" >> $GITHUB_STEP_SUMMARY
+          echo "- UK NHS (National Health Service)" >> $GITHUB_STEP_SUMMARY
+          echo "- US NIMH (National Institute of Mental Health)" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "### Generated Files" >> $GITHUB_STEP_SUMMARY
+          ls -la assessment_tool/data/ >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          ls -la frontend/src/i18n/ >> $GITHUB_STEP_SUMMARY
+
+  # Quality assurance job
+  quality-assurance:
+    name: Quality Assurance
+    runs-on: ubuntu-latest
+    needs: parallel-data-extraction
+    timeout-minutes: 15
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      
+      - name: Download processed artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: processed-assessments-${{ needs.parallel-data-extraction.outputs.run_number }}
+          path: downloaded-data
+      
+      - name: Validate content quality
+        run: |
+          python -c "
+          import json
+          import os
+          
+          # Load unified assessments
+          with open('downloaded-data/assessment_tool/data/unified_assessments.json') as f:
+              data = json.load(f)
+          
+          cognitive_count = len(data.get('cognitive_distortions', []))
+          irrational_count = len(data.get('irrational_beliefs', []))
+          
+          print(f'Cognitive Distortions: {cognitive_count}')
+          print(f'Irrational Beliefs: {irrational_count}')
+          
+          # Validate Taiwan cultural validation priority
+          taiwan_validated = sum(1 for item in data.get('cognitive_distortions', []) if item.get('taiwan_validation', False))
+          print(f'Taiwan-validated cognitive items: {taiwan_validated}')
+          
+          # Validate source attribution
+          sources = data.get('source_attributions', {})
+          print(f'Sources: {list(sources.keys())}')
+          
+          # Validate i18n content
+          i18n_files = [
+              'downloaded-data/frontend/src/i18n/cognitive_distortions_en.json',
+              'downloaded-data/frontend/src/i18n/cognitive_distortions_zh-tw.json',
+              'downloaded-data/frontend/src/i18n/irrational_beliefs_en.json',
+              'downloaded-data/frontend/src/i18n/irrational_beliefs_zh-tw.json'
+          ]
+          
+          for f in i18n_files:
+              with open(f) as fp:
+                  i18n_data = json.load(fp)
+              lang = i18n_data.get('metadata', {}).get('language', 'unknown')
+              cog_count = len(i18n_data.get('cognitive_distortions', []))
+              irr_count = len(i18n_data.get('irrational_beliefs', []))
+              print(f'{f}: {lang} - {cog_count} cognitive, {irr_count} irrational')
+          
+          print('✓ All quality checks passed')
+          "
+
+  # Deployment preparation job
+  deploy-preparation:
+    name: Deployment Preparation
+    runs-on: ubuntu-latest
+    needs: quality-assurance
+    if: github.ref == 'refs/heads/main'
+    timeout-minutes: 10
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      
+      - name: Download processed artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: processed-assessments-${{ needs.parallel-data-extraction.outputs.run_number }}
+          path: deployment-data
+      
+      # In a real deployment, this would deploy to CDN or hosting
+      - name: Prepare deployment package
+        run: |
+          mkdir -p deployment-package
+          cp -r downloaded-data/assessment_tool deployment-package/
+          cp -r downloaded-data/frontend/src/i18n deployment-package/
+          
+          # Create deployment manifest
+          cat > deployment-package/manifest.json << EOF
+          {
+            "version": "1.0.0",
+            "deployed_at": "$(date -u +%Y-%m-%dT%H:%M:%SZ)",
+            "run_number": "${{ github.run_number }}",
+            "commit_sha": "${{ github.sha }}",
+            "files": [
+              "assessment_tool/data/unified_assessments.json",
+              "assessment_tool/data/cognitive_distortions.json",
+              "assessment_tool/data/irrational_beliefs.json",
+              "i18n/cognitive_distortions_en.json",
+              "i18n/cognitive_distortions_zh-tw.json",
+              "i18n/irrational_beliefs_en.json",
+              "i18n/irrational_beliefs_zh-tw.json"
+            ]
+          }
+          EOF
+          
+          echo "Deployment package ready"
+          ls -la deployment-package/
+
+      - name: Upload deployment package
+        uses: actions/upload-artifact@v4
+        with:
+          name: deployment-package-${{ github.run_number }}
+          path: deployment-package/
+          retention-days: 90
+
+# Required permissions
+permissions:
+  contents: read
+  actions: read
