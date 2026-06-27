@@ -12,13 +12,14 @@ import os
 from datetime import datetime
 from pathlib import Path
 import sys
+import threading
+import queue
 
 # Setup logging
 logging.basicConfig(
     level=logging.INFO,
     format='%(asctime)s - %(levelname)s - %(message)s',
     handlers=[
-        logging.FileHandler('mental_health_assessment_system/assessment_processing.log'),
         logging.StreamHandler(sys.stdout)
     ]
 )
@@ -86,9 +87,6 @@ class AssessmentProcessingPipeline:
     
     def _parallel_source_processing(self):
         """Process all sources in parallel using threading"""
-        import threading
-        import queue
-        
         results = {}
         errors = {}
         processing_queue = queue.Queue()
@@ -576,13 +574,10 @@ class AssessmentProcessingPipeline:
 
 def main():
     """Main function to run the assessment processing pipeline"""
-    logging.info("Starting Mental Health Assessment Processing Pipeline")
-    
     try:
         pipeline = AssessmentProcessingPipeline()
         source_data, unified_data = pipeline.run_processing()
         
-        logging.info("Pipeline execution completed successfully!")
         return 0
         
     except Exception as e:
