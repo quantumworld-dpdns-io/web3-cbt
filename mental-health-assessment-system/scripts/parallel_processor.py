@@ -2,8 +2,8 @@
 """
 Parallel Mental Health Assessment Processing Pipeline
 
-This script processes mental health assessment content from all four authoritative sources
-and generates unified data structures for the Mental Health Assessment System.
+This script processes mental health assessment content from four authoritative sources
+in parallel and generates unified data structures for the Mental Health Assessment System.
 """
 
 import json
@@ -88,7 +88,6 @@ class AssessmentProcessingPipeline:
     def _parallel_source_processing(self):
         """Process all sources in parallel using threading"""
         results = {}
-        errors = {}
         processing_queue = queue.Queue()
         results_queue = queue.Queue()
         
