@@ -1,0 +1,19 @@
+{
+  "app.name": "Web3 心理健康評估",
+  "app.disclaimer": "本工具僅供教育及研究用途，不能取代專業醫療建議、診斷或治療。",
+  "app.sources": "資料來源：台灣衛福部、台灣國衛院、英國NHS、美國NIMH",
+  "submit": "提交",
+  "reset": "重新填答",
+  "result.title": "您的評估結果",
+  "result.score": "分數",
+  "result.severity": "嚴重程度",
+  "result.recommendation": "如果您正經歷明顯的困擾，請諮詢合格的心理健康專業人員。",
+  "severity.mild": "輕度",
+  "severity.moderate": "中度",
+  "severity.severe": "重度",
+  "cognitive.title": "認知扭曲檢核表",
+  "cognitive.subtitle": "評估您經歷每種認知扭曲的頻率（0 = 從不，10 = 總是）",
+  "irrational.title": "非理性信念測驗",
+  "irrational.subtitle": "評估您對每種信念的認同程度（0 = 非常不同意，10 = 非常同意）",
+  "summary.title": "評估摘要"
+}

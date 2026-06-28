@@ -1,6 +1,11 @@
 import React, { useState, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 
+import cogEn from './i18n/cognitive_distortions_en.json'
+import cogZhTw from './i18n/cognitive_distortions_zh-tw.json'
+import irrEn from './i18n/irrational_beliefs_en.json'
+import irrZhTw from './i18n/irrational_beliefs_zh-tw.json'
+
 interface AssessmentItem {
   id: string
   label: string
@@ -44,14 +49,14 @@ const AssessmentForm: React.FC<AssessmentComponentProps> = ({ type, items, onCom
     setScore(0)
   }
 
-  const getSeverity = (score: number) => {
+  const getSeverity = (s: number) => {
     if (type === 'cognitive') {
-      if (score <= 15) return { label: t('severity.mild'), color: '#4caf50' }
-      if (score <= 30) return { label: t('severity.moderate'), color: '#ff9800' }
+      if (s <= 15) return { label: t('severity.mild'), color: '#4caf50' }
+      if (s <= 30) return { label: t('severity.moderate'), color: '#ff9800' }
       return { label: t('severity.severe'), color: '#f44336' }
     }
-    if (score <= 20) return { label: t('severity.mild'), color: '#4caf50' }
-    if (score <= 40) return { label: t('severity.moderate'), color: '#ff9800' }
+    if (s <= 20) return { label: t('severity.mild'), color: '#4caf50' }
+    if (s <= 40) return { label: t('severity.moderate'), color: '#ff9800' }
     return { label: t('severity.severe'), color: '#f44336' }
   }
 
@@ -119,7 +124,7 @@ const AssessmentForm: React.FC<AssessmentComponentProps> = ({ type, items, onCom
 
 const Header: React.FC = () => {
   const { t, i18n } = useTranslation()
-  
+
   return (
     <header style={styles.header}>
       <h1 style={styles.logo}>
@@ -140,33 +145,22 @@ const Header: React.FC = () => {
 }
 
 const App: React.FC = () => {
-  const { t } = useTranslation()
+  const { t, i18n } = useTranslation()
   const [cognitiveItems, setCognitiveItems] = useState<AssessmentItem[]>([])
   const [irrationalItems, setIrrationalItems] = useState<AssessmentItem[]>([])
   const [cognitiveScore, setCognitiveScore] = useState(0)
   const [irrationalScore, setIrrationalScore] = useState(0)
 
   useEffect(() => {
-    // Load i18n data
-    const loadData = async () => {
-      try {
-        const [cogEn, , irrEn, ] = await Promise.all([
-          fetch('/cognitive_distortions_en.json').then(r => r.json()),
-          fetch('/cognitive_distortions_zh-tw.json').then(r => r.json()),
-          fetch('/irrational_beliefs_en.json').then(r => r.json()),
-          fetch('/irrational_beliefs_zh-tw.json').then(r => r.json())
-        ])
-        
-        // Use the data from i18n resources
-        setCognitiveItems(cogEn.cognitive_distortions || [])
-        setIrrationalItems(irrEn.irrational_beliefs || [])
-      } catch (e) {
-        console.error('Failed to load assessment data:', e)
-      }
+    const lang = i18n.language
+    if (lang === 'zh-TW') {
+      setCognitiveItems(cogZhTw.cognitive_distortions || [])
+      setIrrationalItems(irrZhTw.irrational_beliefs || [])
+    } else {
+      setCognitiveItems(cogEn.cognitive_distortions || [])
+      setIrrationalItems(irrEn.irrational_beliefs || [])
     }
-    
-    loadData()
-  }, [])
+  }, [i18n.language])
 
   const handleCognitiveComplete = (score: number) => setCognitiveScore(score)
   const handleIrrationalComplete = (score: number) => setIrrationalScore(score)
@@ -189,7 +183,7 @@ const App: React.FC = () => {
             onComplete={handleIrrationalComplete}
           />
         </section>
-        
+
         {(cognitiveScore > 0 || irrationalScore > 0) && (
           <div style={styles.summary}>
             <h2>{t('summary.title')}</h2>
