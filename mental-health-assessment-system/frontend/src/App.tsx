@@ -1,28 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import i18n from 'i18next'
-import { initReactI18next } from 'react-i18next'
 import { useTranslation } from 'react-i18next'
-
-// Initialize i18n
-i18n
-  .use(initReactI18next)
-  .init({
-    resources: {
-      en: {
-        cognitive: require('./i18n/cognitive_distortions_en.json'),
-        irrational: require('./i18n/irrational_beliefs_en.json')
-      },
-      'zh-TW': {
-        cognitive: require('./i18n/cognitive_distortions_zh-tw.json'),
-        irrational: require('./i18n/irrational_beliefs_zh-tw.json')
-      }
-    },
-    lng: 'zh-TW',
-    fallbackLng: 'en',
-    interpolation: {
-      escapeValue: false
-    }
-  })
 
 interface AssessmentItem {
   id: string
@@ -173,7 +150,7 @@ const App: React.FC = () => {
     // Load i18n data
     const loadData = async () => {
       try {
-        const [cogEn, cogZh, irrEn, irrZh] = await Promise.all([
+        const [cogEn, , irrEn, ] = await Promise.all([
           fetch('/cognitive_distortions_en.json').then(r => r.json()),
           fetch('/cognitive_distortions_zh-tw.json').then(r => r.json()),
           fetch('/irrational_beliefs_en.json').then(r => r.json()),
@@ -238,8 +215,6 @@ const App: React.FC = () => {
     </div>
   )
 }
-
-import { useState } from 'react'
 
 const styles: Record<string, React.CSSProperties> = {
   app: {
