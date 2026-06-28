@@ -1,3 +1,5 @@
 auto_commit.sh
 /mental-health-assessment-system/frontend/node_modules
 /mental-health-assessment-system/frontend/dist
+
+*.DS_Store
